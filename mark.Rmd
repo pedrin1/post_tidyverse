@@ -296,7 +296,7 @@ Quando importamos banco de dados, na maioria das vezes ele já vem no formato de
 
 # *purrr*
 
-O pacote purr veio para aprimorar as ferramentas de programação funcional. Ele nos fornece um conjunto de ferramentas para trabalharmos com vetores e funções. Você pode conferir o cheat sheet [cliclando aqui](https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf). Umas das funções mais importantes do pacote é a `map`. `map` é uma abstração de laços, permitindo que iteremos nos elementos de uma lista e não em alguma variável auxiliar. Em outras palavras ele aplica uma função em todo elemento de uma lista. 
+O pacote purr veio para aprimorar as ferramentas de programação funcional. Ele nos fornece um conjunto de ferramentas para trabalharmos com vetores e funções. Você pode conferir o cheat sheet [cliclando aqui](https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf). Umas das funções mais importantes do pacote é a `map`. `map` é uma abstração de laços, permitindo que iteremos nos elementos de uma lista e não em alguma variável auxiliar. Em outras palavras ele aplica uma função em todo elemento de uma lista.. 
 
 
 
