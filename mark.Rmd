@@ -215,7 +215,7 @@ Torne os valores omissos implícitos explícitos com complete(); tornar explíci
 ```
 
 
-Agora vamos utilizar a função `drop_na` citada a cima  para remover as  linhas com valores vazios e selecionar apenas as variáveis que iremos utilizar.
+Agora vamos utilizar a função `drop_na` citada a cima  para remover as  linhas com valores vazios e selecionar apenas as variáveis que iremos utilizar. 
 
 
 ```{r}
