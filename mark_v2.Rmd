@@ -22,15 +22,13 @@ library(tidyverse)
 O `readr` é um pacote que serve para ler e importar bancos de dados para o R, os dados podem ser de diversos tipo, como,  csv, tsv e xlsx. O `readr` combina duas partes para fazerem as funções, onde uma irá analisar o arquivo de maneira geral e outra a especificação da coluna. A especificação da coluna descreve como cada coluna deve ser convertida de um vetor de caracteres para o tipo de dados mais apropriado e, na maioria dos casos, não é necessário porque `readr` irá fazê-lo automaticamente. Já fizemos um post sobre importação de dados no r onde mostramos diferentes maneiras de importar dados, inclusive usando o `readr`. Você pode acessar o post clicando [aqui](https://daslab-ufes.github.io/importando-dados/).
 
 
-```{r, eval=F}
-#algumas funções do readr
-read_csv(): arquivos separados por vírgula (CSV)
-read_tsv(): arquivos separados por tabulação
-read_delim(): arquivos gerais delimitados
-read_fwf(): arquivos de largura fixa
-read_table(): arquivos tabulares onde as colunas são separadas por espaço em branco.
-read_log(): arquivos de log da web
-```
+
+- `read_csv()`: arquivos separados por vírgula (CSV)
+- `read_tsv()`: arquivos separados por tabulação
+- `read_delim()`: arquivos gerais delimitados
+- `read_fwf()`: arquivos de largura fixa
+- `read_table()`: arquivos tabulares onde as colunas são separadas por  - - espaço em branco.
+- `read_log()`: arquivos de log da web
 
 Para as análises, estou importando os dados com a função `read_excel` do pacote `readxl`.
 
@@ -135,15 +133,15 @@ Vamos agora tratar os dados da 2º base de dados, que contém os dados da popul�
 
 O pacote stringr possui diversas funções para nos ajudar no tratamento de strings. Mas afinal, o que é uma string? Em resumo, uma string é umas sequência de caracteres que geralmente são utilizadas para representar palavras, frases ou textos de um programa. Strings estão presentes da maioria dos bancos de dados e é importante ter pelo menos noção de como "organizar" essas strings. Segue algumas funções:
 
-```{r, eval=F}
-str_detect(): informa se há alguma correspondência com o padrão.
-str_count(): conta o número de padrões. 
-str_subset(): extrai os componentes correspondentes.
-str_locate(): dá a posição da partida.
-str_extract(): extrai o texto da partida.
-str_replace(): substitui as correspondências por um novo texto.
-str_split(): divide uma corda em vários pedaços.
-```
+
+- `str_detect()`: informa se há alguma correspondência com o padrão.
+- `str_count()`: conta o número de padrões. 
+- `str_subset()`: extrai os componentes correspondentes.
+- `str_locate()`: dá a posição da partida.
+- `str_extract()`: extrai o texto da partida.
+- `str_replace()`: substitui as correspondências por um novo texto.
+- `str_split()`: divide uma corda em vários pedaços.
+
 Para aprofundar melhor no uso dessas funções, iremos deixar o [link](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf) do *cheat sheet* (folha de dicas) do `stringr`.
 
 
@@ -179,17 +177,16 @@ O pacote tidyr foi criado para ajudá-lo a criar dados organizados, mas o que se
 O tidyr descreve uma maneira padrão de organizar os dados e mostra que se você garantir que seus dados estão organizados, você gastará menos tempo lutando com as ferramentas e mais tempo trabalhando em sua análise. Esse pacote possui cinco "famílias", cada uma com um objetivo diferente que ajudará na organização dos seus dados. Vamos falar brevemente sobre cada uma.
 
 
-```{r, eval=F}
-“Pivotagem” que converte entre formas longas e largas. Exemplos pivot_longer() e pivot_wider().
 
-“Retangling”, que transforma listas profundamente aninhadas em coisas organizadas. Exemplos unnest_longer(), unnest_wider(), hoist()
+- “Pivotagem” que converte entre formas longas e largas. Exemplos pivot_longer() e pivot_wider().
 
-O aninhamento converte os dados agrupados em um formulário em que cada grupo se torna uma única linha contendo um quadro de dados aninhado e o desaninhamento faz o oposto. Veja nest(), unnest()e vignette("nest")para mais detalhes.
+- “Retangling”, que transforma listas profundamente aninhadas em coisas organizadas. Exemplos unnest_longer(), unnest_wider(), hoist()
 
-Dividindo e combinando colunas de caracteres. Use separate()e extract() para puxar uma única coluna de caractere em várias colunas; use unite() para combinar várias colunas em uma única coluna de caractere.
+- O aninhamento converte os dados agrupados em um formulário em que cada grupo se torna uma única linha contendo um quadro de dados aninhado e o desaninhamento faz o oposto. Veja nest(), unnest()e vignette("nest")para mais detalhes.
 
-Torne os valores omissos implícitos explícitos com complete(); tornar explícitos os valores ausentes implícitos com drop_na(); substitua os valores ausentes pelo valor seguinte / anterior por fill(), ou um valor conhecido por replace_na().
-```
+- Dividindo e combinando colunas de caracteres. Use separate()e extract() para puxar uma única coluna de caractere em várias colunas; use unite() para combinar várias colunas em uma única coluna de caractere.
+
+- Torne os valores omissos implícitos explícitos com complete(); tornar explícitos os valores ausentes implícitos com drop_na(); substitua os valores ausentes pelo valor seguinte / anterior por fill(), ou um valor 
 
 Agora vamos utilizar a função `drop_na` citada acima  para remover as  linhas com valores vazios e selecionar apenas as variáveis que iremos utilizar. 
 
@@ -226,7 +223,7 @@ Vamos então ao gráficos de comparação. Para isso, precisaremos plotar duas v
 
 ```{r, message=FALSE}
 library(reshape2)
-dados_1<- melt(dados)
+dados_1 <- melt(dados)
 ```
 
 
@@ -261,6 +258,22 @@ Quando importamos banco de dados utilizando o pacote `readr`, na maioria das vez
 
 # *purrr*
 
-O pacote purr veio para aprimorar as ferramentas de programação funcional. Ele nos fornece um conjunto de ferramentas para trabalharmos com vetores e funções. Você pode conferir o cheat sheet [clicando aqui](https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf). Umas das funções mais importantes do pacote é a `map`. `map` é uma abstração de laços, permitindo que façamos iterações nos elementos de uma lista e não em alguma variável auxiliar. Em outras palavras ele aplica uma função em todo elemento de uma lista. 
+O pacote purr veio para aprimorar as ferramentas de programação funcional. Ele nos fornece um conjunto de ferramentas para trabalharmos com vetores e funções. Você pode conferir o cheat sheet [clicando aqui](https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf). Umas das funções mais importantes do pacote é a `map`. `map` é uma abstração de laços, permitindo que façamos iterações nos elementos de uma lista e não em alguma variável auxiliar. Em outras palavras ele aplica uma função em todo elemento de uma lista. Suponha que a gente queira calcular a diferença media entre população estimada e a população real. Uma ideia legal para evitar possíveis `if´s` e `for´s` seria a utilização do map. Vamos criar um vetor com os Estados de nosso interesse e uma função que ira calcular essa diferença media. Então, o map vai simplismente aplicar essa função em cada elemento do nosso vetor.
+
+```{r}
+lista_estados <- c("ES", "SP", "RJ")
+
+
+dfm <- function(a){
+  dadosf <- filter(dados, uf == a)
+  mean(dadosf$populacao_estimada - dadosf$pop)
+}
+
+map(lista_estados, dfm)
+
+
+
+```
+
 
 
