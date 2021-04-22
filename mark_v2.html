@@ -174,7 +174,7 @@ pre code {
 
 <div id="introdução" class="section level1">
 <h1>Introdução</h1>
-<p>Na maioria dos trabalhos e análises que vamos fazer aqui no R, sempre precisamos de pacotes que nos auxiliem, seja um que facilite o tratamento de dados ou um que apenas deixa a estétíca de um gráfico um pouquinho mais legal. De qualquer forma, sempre precisamos carregar pacotes para o nosso projeto. Nesse post vamos falar um pouco sobre um dos pacotes mais utilizados no R, o <code>tidyverse</code>. O <code>tidyverse</code> é uma coleção de outros pacotes que são utilizados para manipulação, exploração e visualização de dados e que compartilham uma filosofia de design bem parecida, por isso de forma combinada permitem que você consiga fazer inúmeros trabalhos. Para descrever melhor como funciona o <code>tidyverse</code>, vamos falar sobre cada pacote presente nele de uma forma bem resumida, mostrando suas principais funções e exemplos de como utilizar. Mais para frente criaremos também um post para falar desses pacotes de uma forma mais aprofundada.</p>
+<p>Na maioria dos trabalhos e análises que vamos fazer aqui no R, sempre precisamos de pacotes que nos auxiliem, seja um que facilite o tratamento de dados ou um que apenas deixa a estétíca de um gráfico um pouquinho mais legal. De qualquer forma, sempre precisamos carregar pacotes para o nosso projeto. Nesse post vamos falar um pouco sobre um dos pacotes mais utilizados no R, o <code>tidyverse</code>. O <code>tidyverse</code> é uma coleção de outros pacotes que são utilizados para manipulação, exploração e visualização de dados e que compartilham uma filosofia de design bem parecida, por isso de forma combinada permitem que você consiga fazer inúmeros trabalhos. Os pacotes que fazem parte desse universo são: <code>dplyr</code>, <code>tidyr</code>, <code>ggplot2</code>, <code>forcats</code>, <code>purrr</code>, <code>stringr</code>, <code>tibble</code> e <code>readr</code>. Para descrever melhor como funciona o <code>tidyverse</code>, vamos falar sobre cada pacote presente nele de uma forma bem resumida, mostrando suas principais funções e exemplos de como utilizar. Mais para frente criaremos também um post para falar desses pacotes de uma forma mais aprofundada.</p>
 <p>Para mostrar a utilização do <code>tidyverse</code> iremos realizar um tratamento na base de dados do censo demográfico brasileiro, em que o último foi realizado em 2010. Iremos também usar uma base de dados que contém informações da população estimada em cada município do Brasil em 2020. Com a utilização de algumas funções do pacote será possível juntar os dois bancos de dados e realizar uma comparação da população.</p>
 <pre class="r"><code>#carregando o tidiverse 
 library(tidyverse)</code></pre>
@@ -198,41 +198,41 @@ estimado &lt;- read_excel(&quot;estimado.xlsx&quot;)</code></pre>
 </div>
 <div id="dplyr" class="section level1">
 <h1><em>dplyr</em></h1>
-<p>Primeiramento vamos falar sobre o pacote <code>dplyr</code>. O pacote tem uma descrição bem direta para mostrar pra que ele serve: “<code>dplyr</code> é uma gramática de manipulação de dados, fornecendo um conjunto consistente de verbos que ajudam a resolver os desafios mais comuns de manipulação de dados”. Vamos então mostrar algumas de suas funções.</p>
+<p>Primeiramento vamos falar sobre o pacote <code>dplyr</code>. O pacote tem uma descrição bem direta para mostrar pra que ele serve: “<code>dplyr</code> é uma gramática de manipulação de dados, fornecendo um conjunto consistente de verbos que ajudam a resolver os desafios mais comuns de manipulação de dados”. Para maiores informações acesse <a href="https://rpubs.com/CristianaFreitas/311735">este link</a> Vamos então mostrar algumas de suas funções.</p>
 <ul>
 <li><code>mutate()</code>: adiciona novas variáveis que são funções de variáveis existentes.</li>
-<li><code>group_by()</code>:</li>
+<li><code>group_by()</code>: agrupa pela(s) variável(is) no argumento. Função muito útil quando usada a funçaõ summurise.</li>
+<li><code>summarise()</code>: reduz vários valores a um único resumo.</li>
 <li><code>select()</code>: escolhe variáveis com base em seus nomes.</li>
 <li><code>filter()</code>: escolhe casos com base em seus valores.</li>
-<li><code>summarise()</code>: reduz vários valores a um único resumo.</li>
 <li><code>arrange()</code>: altera a ordem das linhas.</li>
 </ul>
 <p>Essas funções são bastante utilizadas em diversos tipos de análises e cada uma com uma finalidade, podemos misturar essas funções entre si e até mesmo com funções de outros pacotes para gerar o resultado desejado.</p>
-<p>O <code>dplyr</code> também possui uma função extremamente utilizada no R (que inclusive foi utilizada o exemplo a cima), o pipe (<code>%&gt;%</code>). Ele é usado para expressar claramente uma sequência de múltiplas operações. Mas porque devo usar o pipe? Bom, veja algumas vantagens:</p>
+<p>O <code>dplyr</code> também possui uma função extremamente utilizada no R, o pipe (<code>%&gt;%</code>). Ele é usado para expressar claramente uma sequência de múltiplas operações. Mas porque devo usar o pipe? Bom, veja algumas vantagens:</p>
 <ul>
 <li><p>Você estruturará a sequência de suas operações de dados da esquerda para a direita, em oposição à sequência de dentro para fora;</p></li>
 <li><p>Você evitará chamadas de função aninhadas;</p></li>
 <li><p>Você minimizará a necessidade de variáveis locais e definições de funções;</p></li>
 <li><p>Você tornará mais fácil adicionar etapas em qualquer lugar na sequência de operações.</p></li>
 </ul>
+<p>Voltando para as análises. Primeramente vamos arrumar a base de dados do censo, usaremos a função <code>clean_names</code> do pacote <code>janitor</code> (não pertencente ao tidyverse) para limpar e padronizar os nomes das variáveis, depois aplicaremos um filtro para pegar apenas os dados de 2010. Iremos renomear a varíavel <code>uf</code> para <code>uf_code</code> para facilitar um pouco nosso entendimento. Note que já estamos usando algumas das funções mencionadas.</p>
+<pre class="r"><code>censo &lt;- janitor::clean_names(censo)
+censo &lt;- censo %&gt;% 
+ filter(ano == 2010) %&gt;% 
+ mutate(uf = as.character(uf)) %&gt;%
+ rename(&quot;uf_codigo&quot; = uf)</code></pre>
 </div>
 <div id="forcats" class="section level1">
 <h1><em>forcats</em></h1>
-<p>O forcats é um pacote com diversas funções com o objetivo de resolver problemas com fatores. Por exemplo, esse pacote pode ser usado para alteração da ordem dos níveis ou dos valores dos fatores. Vamos ver algumas de suas principais funções:</p>
+<p>O forcats é um pacote com diversas funções com o objetivo de resolver problemas com fatores (variáveis categóricas. Por exemplo, esse pacote pode ser usado para alteração da ordem dos níveis (categorias) ou dos valores dos fatores. Vamos ver algumas de suas principais funções:</p>
 <ul>
-<li><code>fct_reorder()</code>: Reordenando um fator por outra variável.</li>
-<li><code>fct_infreq()</code>: Reordenando um fator pela frequência dos valores.</li>
-<li><code>fct_relevel()</code>: Alterar a ordem de um fator manualmente.</li>
-<li><code>fct_lump()</code>: Colapso dos valores menos / mais frequentes de um fator em “outro”.</li>
+<li><code>fct_reorder()</code>: reordenando um fator por outra variável.</li>
+<li><code>fct_infreq()</code>: reordenando um fator pela frequência dos valores.</li>
+<li><code>fct_relevel()</code>: alterar a ordem de um fator manualmente.</li>
+<li><code>fct_lump()</code>: polapso dos valores menos / mais frequentes de um fator em “outro”.</li>
 <li><code>fct_recode()</code>: permite que você recodifique ou altere o valor de cada nível.</li>
 </ul>
-<p>Voltando para as análises. Primeramente vamos arrumar a base de dados do censo, usaremos a função <code>clean_names</code> do pacote <code>janitor</code> (não pertencente ao tidyverse) para limpar e padronizar os nomes das variáveis, depois aplicaremos um filtro para pegar apenas os dados de 2010. Iremos renomear a varíavel <code>uf</code> para <code>uf_code</code> para facilitar um pouco nosso entendimento. Note que já estamos usando algumas das funções mencionadas.</p>
-<pre class="r"><code>censo &lt;- janitor::clean_names(censo)
-censo &lt;- censo %&gt;%
-  filter(ano == 2010)
-censo$uf &lt;- as.character(censo$uf)
-censo &lt;- rename(censo, &quot;uf_codigo&quot; = uf)</code></pre>
-<p>Agora iremos criar uma nova variável com a função <code>mutate</code> que irá receber os nomes dos municípios, porém todos em letras minúsculas com o auxilio da função <code>tolower</code>. Em seguida, criaremos mais uma variável que vai pegar os códigos dos municípios presentes na vaiável <code>uf_code</code> e recodifica-los para o estado a qual se refere. Os códigos dos municípios foram obtidos no site do IBGE.</p>
+<p>Agora iremos criar uma nova variável com a função <code>mutate</code> que irá receber os nomes dos municípios, porém todos em letras minúsculas com o auxilio da função <code>tolower</code>. Em seguida, criaremos mais uma variável que vai pegar os códigos dos municípios presentes na vaiável <code>uf_code</code> e recodifica-los utilizando a função <code>fct_recode</code> do <code>forcats</code> para o estado a qual se refere. Os códigos dos municípios foram obtidos no site do IBGE.</p>
 <pre class="r"><code>censo &lt;- censo %&gt;%
   mutate(municipio_1 = tolower(municipio))
 
@@ -273,7 +273,7 @@ censo &lt;- censo %&gt;%
 </div>
 <div id="stringr" class="section level1">
 <h1><em>stringr</em></h1>
-<p>O pacote stringr possui diversas funções para nos ajudar no tratamento de strings. Mas afinal, o que é uma string? Em resumo, uma string é umas sequência de caracteres que geralmente são utilizadas para representar palavras, frases ou textos de um programa. Strings estão presentes da maioria dos bancos de dados e é importante ter pelo menos noção de como “organizar” essas strings. Segue algumas funções:</p>
+<p>O pacote <code>stringr</code> possui diversas funções para nos ajudar no tratamento de strings. Mas afinal, o que é uma string? Em resumo, uma string é umas sequência de caracteres que geralmente são utilizadas para representar palavras, frases ou textos de um programa. Strings estão presentes da maioria dos bancos de dados e é importante ter pelo menos noção de como “organizar” essas strings. Segue algumas funções:</p>
 <ul>
 <li><code>str_detect()</code>: informa se há alguma correspondência com o padrão.</li>
 <li><code>str_count()</code>: conta o número de padrões.</li>
@@ -284,16 +284,21 @@ censo &lt;- censo %&gt;%
 <li><code>str_split()</code>: divide uma corda em vários pedaços.</li>
 </ul>
 <p>Para aprofundar melhor no uso dessas funções, iremos deixar o <a href="https://github.com/rstudio/cheatsheets/blob/master/strings.pdf">link</a> do <em>cheat sheet</em> (folha de dicas) do <code>stringr</code>.</p>
-<p>Agora que já entendemos um pouco o funcionamento do stringr, podemos usar suas funções para auxiliar nossa análise. A variável <code>municipio</code> desse banco de dados vem no formato “nome do município (uf)” logo, é necessário utilizar uma função que “entra” em cada observação dessa variável e pegue apenas o “UF” (estado). Depois disso criaremos outra variável que irá remover o “UF” e fique apenas o nome do município. Utilizamos a função <code>str_match</code> e <code>str_sub</code>, respectivamente.</p>
+<p>Agora que já entendemos um pouco o funcionamento do <code>stringr</code>, podemos usar suas funções para auxiliar nossa análise. A variável <code>municipio</code> desse banco de dados vem no formato “nome do município (uf)” logo, é necessário utilizar uma função que “entra” em cada observação dessa variável e pegue apenas o “UF” (estado). Depois disso criaremos outra variável que irá remover o “UF” e fique apenas o nome do município. Utilizamos a função <code>str_match</code> e <code>str_sub</code>, respectivamente.</p>
 <pre class="r"><code>estimado &lt;- janitor::clean_names(estimado)
 estimado &lt;- estimado %&gt;%
-  mutate(uf = str_match(municipio, &quot;[(]([^)]+)[)]&quot;)[,2]) %&gt;%
-  mutate(muni = str_sub(municipio, end = -6)) %&gt;%
+  mutate(uf = str_match(municipio, &quot;[(]([^)]+)[)]&quot;)[,2]) %&gt;% #essa função irá pegar as palavras dentro de parêntes, ex: &quot;(MG)&quot;
+  mutate(muni = str_sub(municipio, end = -6)) %&gt;%  # aqui estamos removendo os últimos dígitos (UF´s) e ficando apenas com o nome do município 
   mutate(municipio_1 = tolower(muni)) %&gt;%
   select(uf, municipio_1, populacao_estimada, everything())</code></pre>
 <p>Agora que tratamos as variáveis desejadas das duas tabelas, é interessante juntá-las em apenas uma base de dados. Vamos fazer isso usando uma função presente no pacote <code>dplyr</code>.</p>
 <pre class="r"><code>dados &lt;- left_join(estimado, censo, by = c(&quot;municipio_1&quot;, &quot;uf&quot;))</code></pre>
-<p>Algumas observações devem ser feitas. Os bancos de dados possuem quantidades diferentes de observações. É possível que municípios pequenos tenham sido criados no intervalo de tempo entre uma pesquisa e outra. Por isso optamos em útilizar o <code>left_join</code> que irá retonar todas as linhas do primeiro banco de dados escolhido, neste caso, pegamos o com o maior número de observações, e irá atribuir valores vazios para células não correspondentes dentre os dois bancos de dados.</p>
+<p>Algumas observações devem ser feitas. Os bancos de dados possuem quantidades diferentes de observações.</p>
+<pre class="r"><code>nrow(censo) # quantidade de observações do banco de dados do censo</code></pre>
+<pre><code>## [1] 5565</code></pre>
+<pre class="r"><code>nrow(estimado) # # quantidade de observações do banco de dados estimado</code></pre>
+<pre><code>## [1] 5571</code></pre>
+<p>Como o motivo dessa diferença na quantidade de observações não está muito claro, optamos em útilizar o <code>left_join</code> que irá retonar todas as linhas do primeiro banco de dados escolhido, neste caso, pegamos o com o maior número de observações, e irá atribuir valores vazios para células não correspondentes dentre os dois bancos de dados.</p>
 </div>
 <div id="tidyr" class="section level1">
 <h1><em>tidyr</em></h1>
@@ -303,15 +308,14 @@ estimado &lt;- estimado %&gt;%
 <li>Cada linha é uma observação.</li>
 <li>Cada célula é um único valor.</li>
 </ul>
-<p>O tidyr descreve uma maneira padrão de organizar os dados e mostra que se você garantir que seus dados estão organizados, você gastará menos tempo lutando com as ferramentas e mais tempo trabalhando em sua análise. Esse pacote possui cinco “famílias”, cada uma com um objetivo diferente que ajudará na organização dos seus dados. Vamos falar brevemente sobre cada uma.</p>
+<p>Organizar seus dados dessa maneira facilita o trabalho porque você tem uma maneira consistente de se referir a variáveis (como nomes de coluna) e observações (como índices de linha). Ao usar dados organizados e ferramentas organizadas, você perde menos tempo se preocupando em como alimentar a saída de uma função na entrada de outra e mais tempo respondendo às suas perguntas sobre os dados. O tidyr descreve o formato dos dados como long (longo), ou seja, com mais linhas e wide (amplo), com mais colunas. O pacote possui qutro principais funções para organizar os seus dados: <code>gather()</code>, <code>separate()</code>, <code>spread()</code> e <code>unite()</code>.</p>
 <ul>
-<li><p>“Pivotagem” que converte entre formas longas e largas. Exemplos pivot_longer() e pivot_wider().</p></li>
-<li><p>“Retangling”, que transforma listas profundamente aninhadas em coisas organizadas. Exemplos unnest_longer(), unnest_wider(), hoist()</p></li>
-<li><p>O aninhamento converte os dados agrupados em um formulário em que cada grupo se torna uma única linha contendo um quadro de dados aninhado e o desaninhamento faz o oposto. Veja nest(), unnest()e vignette(“nest”)para mais detalhes.</p></li>
-<li><p>Dividindo e combinando colunas de caracteres. Use separate()e extract() para puxar uma única coluna de caractere em várias colunas; use unite() para combinar várias colunas em uma única coluna de caractere.</p></li>
-<li><p>Torne os valores omissos implícitos explícitos com complete(); tornar explícitos os valores ausentes implícitos com drop_na(); substitua os valores ausentes pelo valor seguinte / anterior por fill(), ou um valor</p></li>
+<li><code>gather()</code>: torna os dados “amplos” mais longos.</li>
+<li><code>spread()</code>: torna os dados “longos” mais amplos.</li>
+<li><code>separate()</code>: divide uma única coluna em várias colunas.</li>
+<li><code>unite()</code>: combina várias colunas em uma única coluna.</li>
 </ul>
-<p>Agora vamos utilizar a função <code>drop_na</code> citada acima para remover as linhas com valores vazios e selecionar apenas as variáveis que iremos utilizar.</p>
+<p>Você pode aprender mais sobre essas funções <a href="https://uc-r.github.io/tidyr">neste link</a>. O <code>tidyr</code> também possui diversar outras funções que você pode olhar acessando o <a href="https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf">cheatsheets</a>. Nesta análise iremos utilizar a função <code>drop_na</code> (Soltar linhas contendo valores ausentes) do pacote para remover as variáveis com valores vazios e selecionar apenas as que iremos utilizar.</p>
 <pre class="r"><code>dados &lt;- drop_na(dados)
 dados &lt;- dados %&gt;%
   select(uf, municipio_1, populacao_estimada, pop)</code></pre>
@@ -351,10 +355,10 @@ ggplot(dados, aes(x = uf)) + geom_bar(fill = &quot;purple&quot;) +
 </div>
 <div id="tibble" class="section level1">
 <h1><em>tibble</em></h1>
-<p>um <code>tibble</code> se descreve como uma reimaginação moderna dos dados. Ele mantém o que o tempo provou ser eficaz e tira tudo aquilo que não é. Basicamente um tibble é um tipo de <code>data.frame</code> com caracteríscas diferentes como, por exemplo, não mudam os nomes ou tipos de variáveis e não fazem correspondência parcial. Isso força você a enfrentar os problemas mais cedos. Vamos então a um exemplo de uso.</p>
+<p>Um <code>tibble</code> se descreve como uma repaginação moderna dos dados. Basicamente um tibble é um tipo de <code>data.frame</code> com caracteríscas diferentes, não mudam os nomes ou tipos de variáveis e não fazem correspondência parcial. Isso força você a enfrentar os problemas mais cedos. Vamos então a um exemplo de uso.</p>
 <pre class="r"><code>notas &lt;- c(&quot;André&quot; = 6, &quot;Larissa&quot; = 9, &quot;Mariana&quot; = 8, &quot;Tobias&quot; = 3) 
 notas &lt;- notas %&gt;% 
-  enframe(name = &quot;aluno&quot;, value = &quot;nota&quot;) 
+  enframe(name = &quot;aluno&quot;, value = &quot;nota&quot;) #enframe converte vetores nomeados ou listas em quadros de dados de uma ou duas colunas
 notas</code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   aluno    nota
@@ -367,7 +371,7 @@ notas</code></pre>
 </div>
 <div id="purrr" class="section level1">
 <h1><em>purrr</em></h1>
-<p>O pacote purr veio para aprimorar as ferramentas de programação funcional. Ele nos fornece um conjunto de ferramentas para trabalharmos com vetores e funções. Você pode conferir o cheat sheet <a href="https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf">clicando aqui</a>. Umas das funções mais importantes do pacote é a <code>map</code>. <code>map</code> é uma abstração de laços, permitindo que façamos iterações nos elementos de uma lista e não em alguma variável auxiliar. Em outras palavras ele aplica uma função em todo elemento de uma lista. Suponha que a gente queira calcular a diferença media entre população estimada e a população real. Uma ideia legal para evitar possíveis <code>if´s</code> e <code>for´s</code> seria a utilização do map. Vamos criar um vetor com os Estados de nosso interesse e uma função que ira calcular essa diferença media. Então, o map vai simplismente aplicar essa função em cada elemento do nosso vetor.</p>
+<p>O pacote purr veio para aprimorar as ferramentas de programação funcional. Ele nos fornece um conjunto de ferramentas para trabalharmos com vetores e funções. Você pode conferir o cheat sheet <a href="https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf">clicando aqui</a>. Umas das funções mais importantes do pacote é a <code>map</code>. <code>map</code> é uma abstração de laços, permitindo que façamos iterações nos elementos de uma lista e não em alguma variável auxiliar. Em outras palavras ele aplica uma função em todo elemento de uma lista. Suponha que a gente queira calcular a diferença média entre população estimada e a população real. Uma ideia legal para evitar possíveis <code>if´s</code> e <code>for´s</code> seria a utilização do map. Vamos criar um vetor com os Estados de nosso interesse e uma função que ira calcular essa diferença. Então, a função <code>map</code> vai simplismente aplicar a função de interesse (definida no argumento) em cada elemento do nosso vetor.</p>
 <pre class="r"><code>lista_estados &lt;- c(&quot;ES&quot;, &quot;SP&quot;, &quot;RJ&quot;)
 
 
@@ -385,6 +389,14 @@ map(lista_estados, dfm)</code></pre>
 ## 
 ## [[3]]
 ## [1] 15981.25</code></pre>
+<p>Este post foi feito para mostrar um pouco de cada pacote do tidyverse e a aplicação de algumas funções em um tratamento simples de dois bancos de dados. Após entender o objetivo de cada pacote, fica mais fácil saber onde procurar determinadas funções que poderão te auxiliar em determinada etapa de sua análise. Vale lembrar que iremos fazer um post mais aprofundado sobre esses pacotes, então fiquem ligados.</p>
+</div>
+<div id="referências" class="section level1">
+<h1>Referências</h1>
+<ul>
+<li><a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a></li>
+<li><a href="https://daslab-ufes.github.io/importando-dados/" class="uri">https://daslab-ufes.github.io/importando-dados/</a></li>
+</ul>
 </div>
 
 
